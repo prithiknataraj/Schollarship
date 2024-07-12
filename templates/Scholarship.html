@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- font awesome cdn link  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+
+  <title>Arivagam.</title>
+
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600&display=swap");
+
+    * {
+      font-family: "Nunito", sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      outline: none;
+      border: none;
+      text-decoration: none;
+      transition: all 0.2s linear;
+      text-transform: capitalize;
+    }
+
+    html {
+      font-size: 62.5%;
+      overflow-x: hidden;
+    }
+
+    body {
+      background: url("/static/img/background.jpg") center/cover no-repeat;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+    }
+
+    .container .title {
+      font-size: 3.5rem;
+      color: rgba(255, 255, 255, 0.7);
+      margin: 5rem 0 3rem 0;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    .container .products-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+      gap: 2rem;
+    }
+
+    .container .products-container .product {
+      text-align: center;
+      padding: 3rem 2rem;
+      background-color: rgba(222, 109, 81, 0.2);
+      backdrop-filter: blur(10px);
+      border-radius: 1rem;
+      border: rgba(255, 255, 255, 0.4) solid 1px;
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+      outline: 0.1rem solid rgba(244, 98, 58, 0.5);
+      outline-offset: -1.5rem;
+      cursor: pointer;
+    }
+
+    .container .products-container .product:hover {
+      outline: 0.2rem solid #f4623a;
+      outline-offset: 0;
+    }
+
+    .container .products-container .product img {
+      height: 25rem;
+    }
+
+    .container .products-container .product:hover img {
+      transform: scale(0.9);
+    }
+
+    .container .products-container .product h3 {
+      padding: 0.5rem 0;
+      font-size: 2rem;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .container .products-container .product:hover h3 {
+      color: #f4623a;
+      font-weight: 800;
+    }
+
+    .container .products-container .product .price {
+      font-size: 1.5rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .products-preview {
+      position: fixed;
+      top: 0;
+      left: 0;
+      min-height: 100vh;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .products-preview .preview {
+      display: none;
+      background-color: rgba(222, 109, 81, 0.2);
+      backdrop-filter: blur(10px);
+      border-radius: 1rem;
+      border: rgba(255, 255, 255, 0.4) solid 1px;
+      padding: 2rem;
+      text-align: center;
+      background: rgba();
+      position: relative;
+      margin: 2rem;
+      width: 40rem;
+    }
+
+    .products-preview .preview.active {
+      display: inline-block;
+    }
+
+    .products-preview .preview img {
+      height: 30rem;
+    }
+
+    .products-preview .preview .fa-times {
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      cursor: pointer;
+      color: #444;
+      font-size: 4rem;
+    }
+
+    .products-preview .preview .fa-times:hover {
+      transform: rotate(90deg);
+    }
+
+    .products-preview .preview h3 {
+      color: rgba(255, 255, 255, 0.9);
+      padding: 0.5rem 0;
+      font-size: 2.5rem;
+    }
+
+    .products-preview .preview p {
+      line-height: 1.5;
+      padding: 1rem 0;
+      font-size: 1.6rem;
+      color: #777;
+    }
+
+    .products-preview .preview .price {
+      padding: 1rem 0;
+      font-size: 2.5rem;
+      color: #27ae60;
+    }
+
+    .products-preview .preview .buttons {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    .products-preview .preview .buttons a {
+      flex: 1 1 16rem;
+      padding: 1rem;
+      font-size: 1.8rem;
+      color: rgb(244, 98, 58);
+      border: 0.1rem solid rgb(244, 98, 58);
+    }
+
+    .products-preview .preview .buttons a.cart {
+      background: rgb(244, 98, 58);
+      color: #fff;
+    }
+
+    .products-preview .preview .buttons a.cart:hover {
+      background: #111;
+    }
+
+    .products-preview .preview .buttons a.buy:hover {
+      background: #444;
+      color: #fff;
+    }
+
+    @media (max-width: 991px) {
+      html {
+        font-size: 55%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .products-preview .preview img {
+        height: 25rem;
+      }
+    }
+
+    @media (max-width: 450px) {
+      html {
+        font-size: 50%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h3 class="title">scholarship</h3>
+
+    <div class="products-container">
+      <div class="product" data-name="p-1">
+        <img src="images/1.png" alt="" />
+        <h3>
+          National Scholarship for Persons with Disabilities (NSP)
+        </h3>
+        <div class="price">Open till 29-08-2024</div>
+      </div>
+
+      <div class="product" data-name="p-2">
+        <img src="images/2.png" alt="" />
+        <h3>
+          Tamil Nadu State Scholarship for Differently Abled Students
+        </h3>
+        <div class="price">Open till 29-08-2024</div>
+      </div>
+
+      <div class="product" data-name="p-3">
+        <img src="images/3.png" alt="" />
+        <h3>
+          All India Confederation of the Blind (AICB) Scholarships.
+        </h3>
+        <div class="price">Open till 29-08-2024</div>
+      </div>
+
+      <div class="product" data-name="p-4">
+        <img src="images/4.png" alt="" />
+        <h3>
+          Swami Vivekananda Scholarship for Differently Abled Students.
+        </h3>
+        <div class="price">Open till 29-08-2024</div>
+      </div>
+
+      <div class="product" data-name="p-5">
+        <img src="images/5.png" alt="" />
+        <h3>Indira Gandhi National Disability Scholarship.</h3>
+        <div class="price">Open till 28-08-2024</div>
+      </div>
+
+      <div class="product" data-name="p-6">
+        <img src="images/6.png" alt="" />
+        <h3>NHFDC Scholarship Scheme.</h3>
+        <div class="price">Open till 15-09-2024</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="products-preview">
+    <div class="preview" data-target="p-1">
+      <i class="fas fa-times"></i>
+      <img src="images/1.png" alt="" />
+      <h3>National Scholarship for Persons with Disabilities (NSP)</h3>
+      <p>
+        Provided by the Ministry of Social Justice & Empowerment.
+      </p>
+      <!-- <div class="price">Open till 29-02-2024</div> -->
+      <div class="buttons">
+        <a href="https://scholarships.gov.in/public/schemeGuidelines/Assam_PRE_Matric_Scholarship_Guideline_updated.pdf"
+          target="_blank" class="buy">Guidelines</a>
+        <a href="https://scholarships.gov.in/public/FAQ/FAQ_ASSAM.pdf" target="_blank" class="cart">FAQ</a>
+      </div>
+    </div>
+
+    <div class="preview" data-target="p-2">
+      <i class="fas fa-times"></i>
+      <img src="images/2.png" alt="" />
+      <h3>
+        Tamil Nadu State Scholarship for Differently Abled Students.
+      </h3>
+      <p>Offered by the Department for the Welfare of Differently Abled Persons, Government of Tamil Nadu.</p>
+      <!-- <div class="price">Open till 29-02-2024</div> -->
+      <div class="buttons">
+        <a href="https://scholarships.gov.in/public/schemeGuidelines/Andaman/andaman_2051_G.pdf" target="_blank"
+          class="buy">Guidelines</a>
+        <a href="https://scholarships.gov.in/public/schemeGuidelines/Andaman/andaman_2051_F.pdf" class="cart"
+          target="_blank">FAQ</a>
+      </div>
+    </div>
+
+    <div class="preview" data-target="p-3">
+      <i class="fas fa-times"></i>
+      <img src="images/3.png" alt="" />
+      <h3>
+        All India Confederation of the Blind (AICB) Scholarships.
+      </h3>
+      <p>
+        Though primarily for visually impaired students, it sometimes extends support to other disabilities, including
+        deaf and mute students.
+      </p>
+      <!-- <div class="price">Open till 29-02-2024</div> -->
+      <div class="buttons">
+        <a href="https://scholarships.gov.in/public/schemeGuidelines/J&K/Guidelines_3049.pdf" target="_blank"
+          class="buy">Guidelines</a>
+        <a href="https://scholarships.gov.in/public/schemeGuidelines/J&K/FAQ_3048.pdf" target="_blank"
+          class="cart">FAQ</a>
+      </div>
+    </div>
+
+    <div class="preview" data-target="p-4">
+      <i class="fas fa-times"></i>
+      <img src="images/4.png" alt="" />
+      <h3>
+        Swami Vivekananda Scholarship for Differently Abled Students.
+      </h3>
+      <p>
+        Managed by the Tamil Nadu Government.
+      </p>
+      <!-- <div class="price">Open till 29-02-2024</div> -->
+      <div class="buttons">
+        <a href="https://scholarships.gov.in/public/schemeGuidelines/ladakh/ladakh_3023_G.pdf" target="_blank"
+          class="buy">Guidelines</a>
+        <a href="https://scholarships.gov.in/public/schemeGuidelines/ladakh/ladakh_3023_F.pdf" target="_blank"
+          class="cart">FAQ</a>
+      </div>
+    </div>
+
+    <div class="preview" data-target="p-5">
+      <i class="fas fa-times"></i>
+      <img src="images/5.png" alt="" />
+      <h3>Indira Gandhi National Disability Scholarship.</h3>
+      <p>
+        Provided by the Ministry of Social Justice and Empowerment.
+      </p>
+      <!-- <div class="price">Open till 28-02-2024</div> -->
+      <div class="buttons">
+        <a href="https://scholarships.gov.in/public/schemeGuidelines/Manipur_state_scheme/Guidelines_3043.pdf"
+          target="_blank" class="buy">Guidelines</a>
+        <a href="https://scholarships.gov.in/public/schemeGuidelines/Manipur_state_scheme/FAQ_3043.pdf" target="_blank"
+          class="cart">FAQ</a>
+      </div>
+    </div>
+
+    <div class="preview" data-target="p-6">
+      <i class="fas fa-times"></i>
+      <img src="images/6.png" alt="" />
+      <h3>NHFDC Scholarship Scheme.</h3>
+      <p>
+        National Handicapped Finance and Development Corporation offers scholarships for students with disabilities.
+      </p>
+      <!-- <div class="price">Open till 15-03-2024</div> -->
+      <div class="buttons">
+        <a href="https://scholarships.gov.in/public/schemeGuidelines/3063_G.pdf" target="_blank"
+          class="buy">Guidelines</a>
+        <a href="https://scholarships.gov.in/#" target="_blank" class="cart">FAQ</a>
+      </div>
+    </div>
+  </div>
+  <script>
+    let preveiwContainer = document.querySelector(".products-preview");
+    let previewBox = preveiwContainer.querySelectorAll(".preview");
+
+    document
+      .querySelectorAll(".products-container .product")
+      .forEach((product) => {
+        product.onclick = () => {
+          preveiwContainer.style.display = "flex";
+          let name = product.getAttribute("data-name");
+          previewBox.forEach((preview) => {
+            let target = preview.getAttribute("data-target");
+            if (name == target) {
+              preview.classList.add("active");
+            }
+          });
+        };
+      });
+
+    previewBox.forEach((close) => {
+      close.querySelector(".fa-times").onclick = () => {
+        close.classList.remove("active");
+        preveiwContainer.style.display = "none";
+      };
+    });
+  </script>
+</body>
+
+</html>
